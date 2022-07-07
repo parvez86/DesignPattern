@@ -13,10 +13,21 @@ public class SynchronizedSingleton {
         return obj;
     }
 
-    public static SynchronizedSingleton getObj2(int value){ // with block synchronization (best)
+    public static SynchronizedSingleton getObj2(int value){ // with block synchronization
         if(obj == null){
             synchronized (Singleton.class) {
                 obj = new SynchronizedSingleton(value);  // lazy initialization
+            }
+        }
+        return obj;
+    }
+    
+    public static SynchronizedSingleton getObj3(int value){ // with double checking block synchronization (best)
+        if(obj == null){
+            synchronized (Singleton.class) {
+                if(obj == null){
+                    obj = new SynchronizedSingleton(value);  // lazy initialization
+                }
             }
         }
         return obj;
